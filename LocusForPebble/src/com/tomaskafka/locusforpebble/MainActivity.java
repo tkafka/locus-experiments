@@ -41,6 +41,56 @@ public class MainActivity extends FragmentActivity {
 	PeriodicUpdate periodicUpdate;
 	PebbleOnUpdateHandler pebbleOnUpdateHandler;
 	
+	public static View trackView;
+	
+	public static void updateDataFromLocus(UpdateContainer update) {
+		if (trackView != null) {
+			TextView 
+				lat = (TextView) trackView.findViewById(R.id.textViewLatitude),
+				lon = (TextView) trackView.findViewById(R.id.textViewLongtitude),
+				alt = (TextView) trackView.findViewById(R.id.textViewAltitude),
+				msg = (TextView) trackView.findViewById(R.id.textViewMessage);
+			
+			
+			String text = "";
+
+			if (update.enabledMyLocation)
+			{
+				if (update.newMyLocation) {
+					text = "NEW: ";
+				} else {
+					text = "Old: ";
+				}
+				
+				if (update.locMyLocation != null) {
+					// text += "Lat: " + update.locMyLocation.getLatitude() + ", Long: " + update.locMyLocation.getLongitude() + ", Alt: " + update.locMyLocation.getAltitude();
+					text += "Known location!";
+				} else {
+
+					text += "enabledMyLocation, but no location :(";
+				}
+				
+			} else {
+				text = "disabledMyLocation :(";
+			} 
+			
+			msg.setText(text);
+			
+			// Toast.makeText(trackView.getContext(), str, Toast.LENGTH_LONG).show();
+
+			
+			if (update.locMyLocation != null) {
+				lat.setText("Lat: " + update.locMyLocation.getLatitude());
+				lon.setText("Lon: " + update.locMyLocation.getLongitude());
+				alt.setText("Alt: " + update.locMyLocation.getAltitude());
+			} else {
+				lat.setText("Lat: -");
+				lon.setText("Lon: -");
+				alt.setText("Alt: -");
+			}
+			
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +224,9 @@ public class MainActivity extends FragmentActivity {
 			// LayoutInflater.from(context).inflate(R.layout.recording_details,
 			// null);
 			View view = inflater.inflate(R.layout.recording_details, null);
+			
+			trackView = view;
+			
 			return view;
 		}
 	}

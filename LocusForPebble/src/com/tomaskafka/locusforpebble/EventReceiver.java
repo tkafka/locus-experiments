@@ -39,8 +39,11 @@ public class EventReceiver extends BroadcastReceiver {
 					return;
 				*/
 				
+				MainActivity.updateDataFromLocus(update);
+				
+				
 				// Toast.makeText(context, "ZoomLevel:" + update.mapZoomLevel, Toast.LENGTH_LONG).show();
-				Toast.makeText(context, "UpdateContainer:\n" + update.toString(), Toast.LENGTH_LONG).show();
+				// Toast.makeText(context, "UpdateContainer:\n" + update.toString(), Toast.LENGTH_LONG).show();
 				
 				/*
 				try {
